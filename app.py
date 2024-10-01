@@ -3,9 +3,16 @@ from tkinter import messagebox
 from tkinter import *
 from PIL import Image, ImageTk
 import sqlite3
+import time
 
 # --- ESTOQUE APP ---
 # VERSÃO - ALPHA 0.0.1
+
+# Função para atualizar a hora
+def update_time(time_label):
+    current_time = time.strftime('%d/%m/%Y %H:%M:%S')  # Formato de data e hora
+    time_label.config(text=current_time)
+    time_label.after(1000, update_time, time_label)  # Atualiza a cada 1000ms (1 segundo)
 
 # Função para verificar login
 def check_login(username, password):
@@ -30,6 +37,7 @@ def check_login(username, password):
 
 # Função chamada ao clicar no botão de login
 def login():
+    global username
     username = entry_user.get()
     password = entry_pass.get()
 
@@ -56,17 +64,49 @@ def open_main_app():
     main_app.state("zoomed")
 
     # ----------- Header --------------
-    header_frame = Frame(main_app, bg="#000", height=60)  # Define a altura desejada
-    header_frame.pack_propagate(False)  # Garante que o frame respeite a altura definida
+    header_frame = Frame(main_app, bg="#444444", height=70)
+    header_frame.pack_propagate(False)
     header_frame.pack(fill="x", side="top")
 
-    # Título à esquerda
-    title_label = Label(header_frame, text="SISTEMA WMS", font=("Arial", 16), fg="white", bg="#000", anchor="w")
-    title_label.pack(side="left", padx=10)
+    # Logo à esquerda
+    # Logo Redimensionado
+    logo_path = "assets/logo_home.png"
+    original_logo = Image.open(logo_path)
+    resized_logo = original_logo.resize((200, 150), Image.ANTIALIAS)  # Redimensionar conforme necessário
+    logo_wms = ImageTk.PhotoImage(resized_logo)
+
+    logo_label = Label(header_frame, image=logo_wms, bg="#444444")
+    logo_label.propagate(False)
+    logo_label.pack(side="left", padx=10)
+
+    # Título
+    username = "LUCAS.D"
+    title_label = Label(header_frame, text=f"BEM-VINDO: {username}", font=("Arial", 16), fg="white", bg="#444444", anchor="w")
+    title_label.place(x=150, y=25)
+
+    # Label de data e hora ao centro
+    time_label = Label(header_frame, font=("Arial", 16), fg="white", bg="#444444", anchor="w")
+    time_label.place(x=1100, y=25)
+    update_time(time_label)
+
+
+    # Botão de iniciar o Servidor
+    btn_OnServer = Button(header_frame, text="SERVER", bg="#00F", fg="white", relief="flat", cursor="hand2")
+    btn_OnServer.place(x=860, y=27)
+
+    # Status do sistema
+    status_conn = "CONECTADO"
+    if status_conn == "CONECTADO" : 
+        fg_color = "lightgreen" 
+    else:
+        fg_color = "red"
+
+    status_label = Label(header_frame, text=f"STATUS: {status_conn}", font=("Arial", 12), fg=fg_color, bg="#444444")
+    status_label.place(x=920, y=28)
 
     # Botão de sair à direita
     btn_sair = Button(header_frame, text="Sair", command=main_app.destroy, bg="#ff4d4d", fg="white", relief="flat", cursor="hand2")
-    btn_sair.pack(side="right", padx=10)
+    btn_sair.place(x=1310, y=27)
 
     main_app.mainloop()
 
@@ -110,6 +150,7 @@ def LoginPage():
 
     # Criando a Entry com placeholder
     entry_user = tk.Entry(Frame_login_Itens, width=36, relief="groove")
+    user_logado = entry_user.get()
     entry_user.place(x=20, y=60)
 
     lb_login_2 = Label(Frame_login_Itens, text="SENHA")
@@ -135,5 +176,5 @@ def LoginPage():
 
 # RODA A INTERFACE
 if __name__ == "__main__":
-    # LoginPage()
-    open_main_app()
+    LoginPage()
+    # open_main_app()
