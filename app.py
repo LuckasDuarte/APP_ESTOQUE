@@ -8,6 +8,9 @@ import time
 # --- ESTOQUE APP ---
 # VERSÃO - ALPHA 0.0.1
 
+
+
+
 # Função para atualizar a hora
 def update_time(time_label):
     current_time = time.strftime('%d/%m/%Y %H:%M:%S')  # Formato de data e hora
@@ -55,7 +58,6 @@ def toggle_password():
     else:
         entry_pass.config(show="*")  # Oculta a senha
 
-# Tela principal da aplicação
 def open_main_app():
     main_app = tk.Tk()
     main_app.title("SISTEMA WMS")
@@ -69,44 +71,51 @@ def open_main_app():
     header_frame.pack(fill="x", side="top")
 
     # Logo à esquerda
-    # Logo Redimensionado
     logo_path = "assets/logo_home.png"
     original_logo = Image.open(logo_path)
-    resized_logo = original_logo.resize((200, 150), Image.ANTIALIAS)  # Redimensionar conforme necessário
+    resized_logo = original_logo.resize((200, 150), Image.LANCZOS)  # Usando LANCZOS
     logo_wms = ImageTk.PhotoImage(resized_logo)
 
     logo_label = Label(header_frame, image=logo_wms, bg="#444444")
-    logo_label.propagate(False)
     logo_label.pack(side="left", padx=10)
+    
+    # Armazenar a imagem para evitar coleta de lixo
+    main_app.logo_wms = logo_wms
 
-    # Título
+    # Título (Saudação) e nome do usuário ao lado do logo
     username = "LUCAS.D"
     title_label = Label(header_frame, text=f"BEM-VINDO: {username}", font=("Arial", 16), fg="white", bg="#444444", anchor="w")
-    title_label.place(x=150, y=25)
+    title_label.place(x=220, y=25)  # Ajusta a posição para estar ao lado do logo
 
-    # Label de data e hora ao centro
+    # Data e Hora (Centralizado)
     time_label = Label(header_frame, font=("Arial", 16), fg="white", bg="#444444", anchor="w")
-    time_label.place(x=1100, y=25)
+    time_label.place(relx=0.5, anchor="center", y=40)  # Centraliza o tempo horizontalmente
     update_time(time_label)
 
-
-    # Botão de iniciar o Servidor
+    # Botão de iniciar o Servidor (direita-centralizado)
     btn_OnServer = Button(header_frame, text="SERVER", bg="#00F", fg="white", relief="flat", cursor="hand2")
-    btn_OnServer.place(x=860, y=27)
+    btn_OnServer.place(x=890, y=27)
 
-    # Status do sistema
+    # Status do sistema (ao lado do Servidor)
     status_conn = "CONECTADO"
-    if status_conn == "CONECTADO" : 
-        fg_color = "lightgreen" 
-    else:
-        fg_color = "red"
-
+    fg_color = "lightgreen" if status_conn == "CONECTADO" else "red"
     status_label = Label(header_frame, text=f"STATUS: {status_conn}", font=("Arial", 12), fg=fg_color, bg="#444444")
-    status_label.place(x=920, y=28)
+    status_label.place(x=950, y=28)
 
-    # Botão de sair à direita
+    # Botão de sair (extrema direita)
     btn_sair = Button(header_frame, text="Sair", command=main_app.destroy, bg="#ff4d4d", fg="white", relief="flat", cursor="hand2")
     btn_sair.place(x=1310, y=27)
+
+    # ---- FRAME APLICAÇÃO PARTE INFERIOR ---- #
+    Frame_HeaderApp = Frame(main_app, bg="#fff", height=180)
+    Frame_HeaderApp.pack_propagate(False)
+    Frame_HeaderApp.pack(fill="x", side="top")
+
+    # -- Frase de Boas Vindas e dados
+    
+
+
+    # -------------------------------------
 
     main_app.mainloop()
 
@@ -176,5 +185,5 @@ def LoginPage():
 
 # RODA A INTERFACE
 if __name__ == "__main__":
-    LoginPage()
-    # open_main_app()
+    # LoginPage()
+    open_main_app()
