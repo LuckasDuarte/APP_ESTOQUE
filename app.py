@@ -84,23 +84,14 @@ def open_main_app():
 
     # Título (Saudação) e nome do usuário ao lado do logo
     username = "LUCAS.D"
-    title_label = Label(header_frame, text=f"BEM-VINDO: {username}", font=("Arial", 16), fg="white", bg="#444444", anchor="w")
-    title_label.place(x=220, y=25)  # Ajusta a posição para estar ao lado do logo
+    title_label = Label(header_frame, text=f"BEM-VINDO: {username}", font=("Arial", 12), fg="white", bg="#444444", anchor="w")
+    title_label.place(x=140, y=25)  # Ajusta a posição para estar ao lado do logo
 
     # Data e Hora (Centralizado)
-    time_label = Label(header_frame, font=("Arial", 16), fg="white", bg="#444444", anchor="w")
-    time_label.place(relx=0.5, anchor="center", y=40)  # Centraliza o tempo horizontalmente
+    time_label = Label(header_frame, font=("Arial", 12), fg="white", bg="#444444", anchor="w")
+    time_label.place(relx=0.5, anchor="center", y=40, x=540)  # Centraliza o tempo horizontalmente
     update_time(time_label)
 
-    # Botão de iniciar o Servidor (direita-centralizado)
-    btn_OnServer = Button(header_frame, text="SERVER", bg="#00F", fg="white", relief="flat", cursor="hand2")
-    btn_OnServer.place(x=890, y=27)
-
-    # Status do sistema (ao lado do Servidor)
-    status_conn = "CONECTADO"
-    fg_color = "lightgreen" if status_conn == "CONECTADO" else "red"
-    status_label = Label(header_frame, text=f"STATUS: {status_conn}", font=("Arial", 12), fg=fg_color, bg="#444444")
-    status_label.place(x=950, y=28)
 
     # Botão de sair (extrema direita)
     btn_sair = Button(header_frame, text="Sair", command=main_app.destroy, bg="#ff4d4d", fg="white", relief="flat", cursor="hand2")
