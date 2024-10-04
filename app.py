@@ -70,14 +70,23 @@ def open_main_app():
     header_frame.pack_propagate(False)
     header_frame.pack(fill="x", side="top")
 
+    # Logo Menu
+    menu_path = "assets/menu.png"
+    original_logo = Image.open(menu_path)
+    resized_logo = original_logo.resize((60, 60), Image.LANCZOS)  # Usando LANCZOS
+    logo_menu = ImageTk.PhotoImage(resized_logo)
+
+    menu_label = Label(header_frame, image=logo_menu, bg="#626267", width=60, height=70)
+    menu_label.pack(side="left", padx=30)
+
     # Logo à esquerda
     logo_path = "assets/logo_home.png"
     original_logo = Image.open(logo_path)
     resized_logo = original_logo.resize((200, 150), Image.LANCZOS)  # Usando LANCZOS
     logo_wms = ImageTk.PhotoImage(resized_logo)
 
-    logo_label = Label(header_frame, image=logo_wms, bg="#444444")
-    logo_label.pack(side="left", padx=10)
+    logo_label = Label(header_frame, image=logo_wms, bg="#444444", width=50)
+    logo_label.pack(side="left")
     
     # Armazenar a imagem para evitar coleta de lixo
     main_app.logo_wms = logo_wms
@@ -85,7 +94,7 @@ def open_main_app():
     # Título (Saudação) e nome do usuário ao lado do logo
     username = "LUCAS.D"
     title_label = Label(header_frame, text=f"BEM-VINDO: {username}", font=("Arial", 12), fg="white", bg="#444444", anchor="w")
-    title_label.place(x=140, y=25)  # Ajusta a posição para estar ao lado do logo
+    title_label.place(x=180, y=25)  # Ajusta a posição para estar ao lado do logo
 
     # Data e Hora (Centralizado)
     time_label = Label(header_frame, font=("Arial", 12), fg="white", bg="#444444", anchor="w")
