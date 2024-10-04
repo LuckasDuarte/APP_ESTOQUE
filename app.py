@@ -70,14 +70,40 @@ def open_main_app():
     header_frame.pack_propagate(False)
     header_frame.pack(fill="x", side="top")
 
+    # Função para exibir/ocultar o frame lateral
+    def toggle_menu():
+        if side_menu_frame.winfo_ismapped():  # Verifica se o frame está visível
+            side_menu_frame.pack_forget()  # Oculta o frame lateral
+        else:
+            side_menu_frame.pack(side="left", fill="y")  # Exibe o frame lateral
+
     # Logo Menu
     menu_path = "assets/menu.png"
     original_logo = Image.open(menu_path)
     resized_logo = original_logo.resize((60, 60), Image.LANCZOS)  # Usando LANCZOS
     logo_menu = ImageTk.PhotoImage(resized_logo)
 
-    menu_label = Label(header_frame, image=logo_menu, bg="#626267", width=60, height=70)
+    menu_label = Label(header_frame, image=logo_menu, bg="#626267", width=60, height=70, cursor="hand2")
     menu_label.pack(side="left", padx=30)
+
+    # Adiciona o evento de clique ao menu_label
+    menu_label.bind("<Button-1>", lambda event: toggle_menu())  # Executa open_menu ao clicar com o botão esquerdo
+
+    # ----------- Frame Lateral --------------
+    side_menu_frame = Frame(main_app, bg="#333333", width=500)  # Frame lateral oculto inicialmente
+
+    # Exemplo de conteúdo dentro do frame lateral
+    label_menu_title = Label(side_menu_frame, text="Menu", font=("Arial", 16), fg="white", bg="#444444")
+    label_menu_title.pack(pady=20)
+
+    btn_option1 = Button(side_menu_frame, text="Opção 1", bg="#333333", fg="white", relief="flat", width=30)
+    btn_option1.pack(pady=10)
+
+    btn_option2 = Button(side_menu_frame, text="Opção 2", bg="#333333", fg="white", relief="flat", width=30)
+    btn_option2.pack(pady=10)
+
+    btn_option3 = Button(side_menu_frame, text="Opção 3", bg="#333333", fg="white", relief="flat", width=30)
+    btn_option3.pack(pady=10)
 
     # Logo à esquerda
     logo_path = "assets/logo_home.png"
@@ -107,9 +133,9 @@ def open_main_app():
     btn_sair.place(x=1310, y=27)
 
     # ---- FRAME APLICAÇÃO PARTE INFERIOR ---- #
-    Frame_HeaderApp = Frame(main_app, bg="#fff", height=180)
-    Frame_HeaderApp.pack_propagate(False)
-    Frame_HeaderApp.pack(fill="x", side="top")
+    # Frame_HeaderApp = Frame(main_app, bg="#fff", height=180)
+    # Frame_HeaderApp.pack_propagate(False)
+    # Frame_HeaderApp.pack(fill="x", side="top")
 
     # -- Frase de Boas Vindas e dados
     
