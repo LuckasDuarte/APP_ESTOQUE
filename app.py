@@ -58,52 +58,24 @@ def toggle_password():
     else:
         entry_pass.config(show="*")  # Oculta a senha
 
+
+
 def open_main_app():
     main_app = tk.Tk()
     main_app.title("SISTEMA WMS")
     icon = tk.PhotoImage(file='assets/parcela.png')
     main_app.iconphoto(True, icon)
     main_app.state("zoomed")
+    main_app.resizable(False, False)
 
     # ----------- Header --------------
     header_frame = Frame(main_app, bg="#444444", height=70)
     header_frame.pack_propagate(False)
     header_frame.pack(fill="x", side="top")
 
-    # Função para exibir/ocultar o frame lateral
-    def toggle_menu():
-        if side_menu_frame.winfo_ismapped():  # Verifica se o frame está visível
-            side_menu_frame.pack_forget()  # Oculta o frame lateral
-        else:
-            side_menu_frame.pack(side="left", fill="y")  # Exibe o frame lateral
-
-    # Logo Menu
-    menu_path = "assets/menu.png"
-    original_logo = Image.open(menu_path)
-    resized_logo = original_logo.resize((60, 60), Image.LANCZOS)  # Usando LANCZOS
-    logo_menu = ImageTk.PhotoImage(resized_logo)
-
-    menu_label = Label(header_frame, image=logo_menu, bg="#626267", width=60, height=70, cursor="hand2")
-    menu_label.pack(side="left", padx=30)
-
-    # Adiciona o evento de clique ao menu_label
-    menu_label.bind("<Button-1>", lambda event: toggle_menu())  # Executa open_menu ao clicar com o botão esquerdo
-
     # ----------- Frame Lateral --------------
-    side_menu_frame = Frame(main_app, bg="#333333", width=500)  # Frame lateral oculto inicialmente
-
-    # Exemplo de conteúdo dentro do frame lateral
-    label_menu_title = Label(side_menu_frame, text="Menu", font=("Arial", 16), fg="white", bg="#444444")
-    label_menu_title.pack(pady=20)
-
-    btn_option1 = Button(side_menu_frame, text="Opção 1", bg="#333333", fg="white", relief="flat", width=30)
-    btn_option1.pack(pady=10)
-
-    btn_option2 = Button(side_menu_frame, text="Opção 2", bg="#333333", fg="white", relief="flat", width=30)
-    btn_option2.pack(pady=10)
-
-    btn_option3 = Button(side_menu_frame, text="Opção 3", bg="#333333", fg="white", relief="flat", width=30)
-    btn_option3.pack(pady=10)
+    side_menu_frame = Frame(main_app, bg="#333333", width=64, height=800)  # Frame lateral
+    side_menu_frame.pack(side="left", fill="y")
 
     # Logo à esquerda
     logo_path = "assets/logo_home.png"
@@ -112,7 +84,7 @@ def open_main_app():
     logo_wms = ImageTk.PhotoImage(resized_logo)
 
     logo_label = Label(header_frame, image=logo_wms, bg="#444444", width=50)
-    logo_label.pack(side="left")
+    logo_label.pack(side="left", padx=10)
     
     # Armazenar a imagem para evitar coleta de lixo
     main_app.logo_wms = logo_wms
@@ -120,27 +92,26 @@ def open_main_app():
     # Título (Saudação) e nome do usuário ao lado do logo
     username = "LUCAS.D"
     title_label = Label(header_frame, text=f"BEM-VINDO: {username}", font=("Arial", 12), fg="white", bg="#444444", anchor="w")
-    title_label.place(x=180, y=25)  # Ajusta a posição para estar ao lado do logo
+    title_label.pack(pady=27, side="left")  # Ajusta a posição para estar ao lado do logo
 
     # Data e Hora (Centralizado)
     time_label = Label(header_frame, font=("Arial", 12), fg="white", bg="#444444", anchor="w")
     time_label.place(relx=0.5, anchor="center", y=40, x=540)  # Centraliza o tempo horizontalmente
     update_time(time_label)
 
-
     # Botão de sair (extrema direita)
     btn_sair = Button(header_frame, text="Sair", command=main_app.destroy, bg="#ff4d4d", fg="white", relief="flat", cursor="hand2")
     btn_sair.place(x=1310, y=27)
 
     # ---- FRAME APLICAÇÃO PARTE INFERIOR ---- #
-    # Frame_HeaderApp = Frame(main_app, bg="#fff", height=180)
-    # Frame_HeaderApp.pack_propagate(False)
-    # Frame_HeaderApp.pack(fill="x", side="top")
+    Frame_App = Frame(main_app, bg="#fff", width=1200, height=800)
+    Frame_App.pack_propagate(False)  # Impede que o frame redimensione automaticamente
+    Frame_App.pack(fill="both", expand=True)  # Ajusta o frame ao tamanho da janela
 
-    # -- Frase de Boas Vindas e dados
-    
-
-
+    # # Exemplo de frase de boas-vindas e dados adicionais
+    welcome_label = Label(Frame_App, text="Bem-vindo ao Sistema WMS", font=("Arial", 16), bg="#fff")
+    welcome_label.place(x=10, y=10)
+   
     # -------------------------------------
 
     main_app.mainloop()
