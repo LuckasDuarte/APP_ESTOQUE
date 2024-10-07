@@ -47,7 +47,7 @@ def login():
     # Verifica se o usuário e senha estão corretos
     if check_login(username, password):
         Login.destroy()  # Fecha a janela de login
-        open_main_app(username)  # Abre a tela principal
+        open_main_app()  # Abre a tela principal PASSAR: username como parametro
     else:
         messagebox.showerror("Erro", "Usuário ou senha incorretos!")
 

@@ -73,7 +73,6 @@ def open_main_app(): #INSERIR COMO ARGUMENTO DA FUNÇÃO: username, para exibir 
     btn_estoque.place(x=10, y=10)
 
     # ---- Botão Movimentações  ----
-    # Carregar imagem de caixa
     carrinho_image_path = "assets/carrinho.png"  # Coloque o caminho da sua imagem de carrinho aqui
     original_carrinho_image = Image.open(carrinho_image_path)
     resized_carrinho_image = original_carrinho_image.resize((50, 50), Image.LANCZOS)  # Redimensionar a imagem
@@ -83,6 +82,19 @@ def open_main_app(): #INSERIR COMO ARGUMENTO DA FUNÇÃO: username, para exibir 
     btn_movimentar = Button(side_menu_frame, image=carrinho_photo, bg="#333333", relief="flat", cursor="hand2")
     btn_movimentar.image = caixa_photo  # Armazenar a imagem para evitar coleta de lixo
     btn_movimentar.place(x=10, y=80)
+
+    # ---- Botão Cadastros  ----
+    produto_image_path = "assets/produto.png"  # Coloque o caminho da sua imagem de produto aqui
+    original_produto_image = Image.open(produto_image_path)
+    resized_produto_image = original_produto_image.resize((50, 50), Image.LANCZOS)  # Redimensionar a imagem
+    produto_photo = ImageTk.PhotoImage(resized_produto_image)
+
+    # Botão com imagem de caixa
+    btn_produtos = Button(side_menu_frame, image=produto_photo, bg="#333333", relief="flat", cursor="hand2")
+    btn_produtos.image = caixa_photo  # Armazenar a imagem para evitar coleta de lixo
+    btn_produtos.place(x=10, y=150)
+
+    
 
     # ---- FRAME APLICAÇÃO PARTE INFERIOR ---- #
     Frame_App = Frame(main_app, bg="#fff", width=1200, height=800)
@@ -97,4 +109,4 @@ def open_main_app(): #INSERIR COMO ARGUMENTO DA FUNÇÃO: username, para exibir 
 
     main_app.mainloop()
 
-# open_main_app()
+open_main_app()
