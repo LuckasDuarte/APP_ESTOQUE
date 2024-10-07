@@ -68,7 +68,7 @@ def open_main_app(): #INSERIR COMO ARGUMENTO DA FUNÇÃO: username, para exibir 
 
     btn_estoque = Button(side_menu_frame, image=caixa_photo, bg="#333333", relief="flat", cursor="hand2")
     btn_estoque.image = caixa_photo  # Armazenar a imagem para evitar coleta de lixo
-    btn_estoque.place(x=10, y=10)
+    btn_estoque.pack(pady=10, padx=10)
 
     # ---- Botão Movimentações  ----
     carrinho_image_path = "assets/carrinho.png"
@@ -77,8 +77,8 @@ def open_main_app(): #INSERIR COMO ARGUMENTO DA FUNÇÃO: username, para exibir 
     carrinho_photo = ImageTk.PhotoImage(resized_carrinho_image)
 
     btn_movimentar = Button(side_menu_frame, image=carrinho_photo, bg="#333333", relief="flat", cursor="hand2")
-    btn_movimentar.image = carrinho_photo  # Corrigir para carrinho_photo
-    btn_movimentar.place(x=10, y=80)
+    btn_movimentar.image = carrinho_photo
+    btn_movimentar.pack(pady=10)
 
     # ---- Botão Cadastros  ----
     produto_image_path = "assets/produto.png"
@@ -87,8 +87,8 @@ def open_main_app(): #INSERIR COMO ARGUMENTO DA FUNÇÃO: username, para exibir 
     produto_photo = ImageTk.PhotoImage(resized_produto_image)
 
     btn_produtos = Button(side_menu_frame, image=produto_photo, bg="#333333", relief="flat", cursor="hand2")
-    btn_produtos.image = produto_photo  # Corrigir para produto_photo
-    btn_produtos.place(x=10, y=150)
+    btn_produtos.image = produto_photo
+    btn_produtos.pack(pady=10)
 
     # ---- Botão Relatório  ----
     relatorio_image_path = "assets/relatorio.png"
@@ -98,45 +98,42 @@ def open_main_app(): #INSERIR COMO ARGUMENTO DA FUNÇÃO: username, para exibir 
 
     btn_relatorios = Button(side_menu_frame, image=relatorio_photo, bg="#333333", relief="flat", cursor="hand2")
     btn_relatorios.image = relatorio_photo
-    btn_relatorios.place(x=10, y=220)
+    btn_relatorios.pack(pady=10)
 
     # ---- Botão Dashboard  ----
-    dashboard_image_path = "assets/grafico.png"  # Coloque o caminho da sua imagem de dashboard aqui
+    dashboard_image_path = "assets/grafico.png"
     original_dashboard_image = Image.open(dashboard_image_path)
     resized_dashboard_image = original_dashboard_image.resize((50, 50), Image.LANCZOS)
     dashboard_photo = ImageTk.PhotoImage(resized_dashboard_image)
 
     btn_dashboard = Button(side_menu_frame, image=dashboard_photo, bg="#333333", relief="flat", cursor="hand2")
-    btn_dashboard.image = dashboard_photo  # Armazenar a imagem para evitar coleta de lixo
-    btn_dashboard.place(x=10, y=290)  # Colocar logo abaixo dos outros botões
+    btn_dashboard.image = dashboard_photo
+    btn_dashboard.pack(pady=10)
+
+    # ---- Frame para os Botões Usuário e Servidor ----
+    bottom_buttons_frame = Frame(side_menu_frame, bg="#333333")
+    bottom_buttons_frame.pack(side="bottom", pady=20)  # Posicionar mais para baixo
 
     # ---- Botão Usuário  ----
-    usuario_image_path = "assets/usuario.png"  # Coloque o caminho da sua imagem de usuário aqui
+    usuario_image_path = "assets/usuario.png"
     original_usuario_image = Image.open(usuario_image_path)
     resized_usuario_image = original_usuario_image.resize((50, 50), Image.LANCZOS)
     usuario_photo = ImageTk.PhotoImage(resized_usuario_image)
 
-    # Criar o botão com a imagem de usuário
-    btn_usuario = Button(side_menu_frame, image=usuario_photo, bg="#333333", relief="flat", cursor="hand2")
+    btn_usuario = Button(bottom_buttons_frame, image=usuario_photo, bg="#333333", relief="flat", cursor="hand2")
     btn_usuario.image = usuario_photo  # Armazenar a imagem para evitar coleta de lixo
-    btn_usuario.place(x=10, y=520)  # Ajustar a posição conforme necessário
+    btn_usuario.pack(pady=10)
 
     # ---- Botão Servidor  ----
-    servidor_image_path = "assets/servidor.png"  # Coloque o caminho da sua imagem de servidor aqui
+    servidor_image_path = "assets/servidor.png"
     original_servidor_image = Image.open(servidor_image_path)
     resized_servidor_image = original_servidor_image.resize((50, 50), Image.LANCZOS)
     servidor_photo = ImageTk.PhotoImage(resized_servidor_image)
 
-    # Criar o botão com a imagem de servidor
-    btn_servidor = Button(side_menu_frame, image=servidor_photo, bg="#333333", relief="flat", cursor="hand2")
+    btn_servidor = Button(bottom_buttons_frame, image=servidor_photo, bg="#333333", relief="flat", cursor="hand2")
     btn_servidor.image = servidor_photo  # Armazenar a imagem para evitar coleta de lixo
-    btn_servidor.place(x=10, y=590)  # Ajustar a posição conforme necessário
+    btn_servidor.pack(pady=10)
 
-
-
-
-
-    
 
     # ---- FRAME APLICAÇÃO PARTE INFERIOR ---- #
     Frame_App = Frame(main_app, bg="#fff", width=1200, height=800)
