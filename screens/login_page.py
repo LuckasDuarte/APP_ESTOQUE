@@ -10,12 +10,15 @@ from screens.main_app import open_main_app
 # --- ESTOQUE APP ---
 # VERSÃO - ALPHA 0.0.1
 
+banco = "database/database.db"
+icone = "assets/parcela.png"
+
 # Função para verificar login
 def check_login(username, password):
 
     try:
         # Conectando ao banco de dados SQLite
-        conn = sqlite3.connect('database/database.db')
+        conn = sqlite3.connect(banco)
         cursor = conn.cursor()
 
         # Consulta para verificar se o usuário e a senha são válidos
@@ -44,7 +47,7 @@ def login():
     # Verifica se o usuário e senha estão corretos
     if check_login(username, password):
         Login.destroy()  # Fecha a janela de login
-        open_main_app()  # Abre a tela principal
+        open_main_app(username)  # Abre a tela principal
     else:
         messagebox.showerror("Erro", "Usuário ou senha incorretos!")
 
@@ -59,10 +62,10 @@ def toggle_password():
 
 # LOGUIN PAGE
 def LoginPage():
-    global Login, entry_user, entry_pass, chk_state
+    global Login, entry_user, entry_pass, chk_state, user_logado
     Login = tk.Tk()
     Login.title("WMS")
-    icon = tk.PhotoImage(file='assets/parcela.png')
+    icon = tk.PhotoImage(file=icone)
     Login.iconphoto(True, icon)
     Login.resizable(False, False)
     Login.state("zoomed")
