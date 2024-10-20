@@ -2,20 +2,19 @@ import sqlite3
 
 try:
     # Conectar ao banco de dados
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('database/database.db')
 
     # Criar um cursor
     cursor = conn.cursor()
 
     # Criar uma tabela
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS USERS (
+        CREATE TABLE IF NOT EXISTS PRODUTOS (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            user TEXT NOT NULL,
-            nome TEXT NOT NULL,
-            senha TEXT NOT NULL,
-            nivel INTEGER NOT NULL,
-            acesso DATE NOT NULL
+            codigo INTEGER NOT NULL,
+            descricao TEXT NOT NULL,
+            fornecedor TEXT NOT NULL,
+            custo FLOAT NOT NULL
         )
     ''')
 
@@ -31,7 +30,7 @@ try:
     # ''', ('Maria Oliveira', 25))
 
     # Salvar as mudanças
-    conn.commit()
+    # conn.commit()
 
 except sqlite3.Error as e:
     print(f"Erro ao operar com o banco de dados: {e}")

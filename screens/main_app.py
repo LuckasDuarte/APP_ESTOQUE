@@ -6,14 +6,15 @@ from PIL import Image, ImageTk
 import sqlite3
 import time
 
+# Teste Grafico - Velocimetro
+import plotly.graph_objects as go
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
 # Função para atualizar a hora
 def update_time(time_label):
     current_time = time.strftime('%d/%m/%Y %H:%M:%S')  # Formato de data e hora
     time_label.config(text=current_time)
     time_label.after(1000, update_time, time_label)  # Atualiza a cada 1000ms (1 segundo)
-
-
-
 
 def open_main_app(): #INSERIR COMO ARGUMENTO DA FUNÇÃO: username, para exibir o nome de maneira dinâmica
     main_app = tk.Tk()
@@ -197,9 +198,87 @@ def open_main_app(): #INSERIR COMO ARGUMENTO DA FUNÇÃO: username, para exibir 
 
     # # Exemplo de frase de boas-vindas e dados adicionais
     welcome_label = Label(Frame_App, text="Bem-vindo ao Sistema WMS", font=("Arial", 16), bg="#fff")
-    welcome_label.place(x=10, y=10)
-   
-    # -------------------------------------
+    welcome_label.place(x=18, y=10)
+
+    # PAGINA INICIAL
+
+    # Função para obter total de produtos
+    def get_total_products():
+        conn = sqlite3.connect('database/database.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM ESTOQUE")
+        total = cursor.fetchone()[0]
+        conn.close()
+        return total
+
+    # Função para obter valor total em estoque
+    def get_total_value():
+        conn = sqlite3.connect('database/database.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT SUM(QUANTIDADE * CUSTO) FROM ESTOQUE")
+        total = cursor.fetchone()[0]
+        conn.close()
+        return total
+
+    # Função para obter produtos com baixo estoque
+    def get_low_stock_items():
+        conn = sqlite3.connect('database/database.db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM ESTOQUE WHERE QUANTIDADE < 5")
+        total = cursor.fetchone()[0]
+        conn.close()
+        return total
+    
+     # Função para formatar valores monetários
+    def format_currency(value):
+        return f"R$ {value:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+
+    # ----- Layout dos quadrados com as informações -----
+    def criar_quadrados_info(main_frame, estoque, valor_estoque, baixo_estoque):
+        # Quadrado 1 - Quantidade de Itens em Estoque
+        frame_estoque = Frame(main_frame, bg="#1e90ff", width=250, height=100)
+        frame_estoque.pack_propagate(False)
+        frame_estoque.grid(row=0, column=0, padx=20, pady=50)
+
+        label_estoque_titulo = Label(frame_estoque, text="ITENS EM ESTOQUE", font=("Arial", 12, "bold"), bg="#1e90ff", fg="white")
+        label_estoque_titulo.pack(pady=10)
+
+        label_estoque_quantidade = Label(frame_estoque, text=f"{estoque}", font=("Arial", 24), bg="#1e90ff", fg="white")
+        label_estoque_quantidade.pack(pady=10)
+
+        # Quadrado 2 - Valor Total em Estoque
+        frame_valor = Frame(main_frame, bg="#32cd32", width=250, height=100)
+        frame_valor.pack_propagate(False)
+        frame_valor.grid(row=0, column=1, padx=20, pady=20)
+
+        label_valor_titulo = Label(frame_valor, text="VALOR EM ESTOQUE", font=("Arial", 12, "bold"), bg="#32cd32", fg="white")
+        label_valor_titulo.pack(pady=10)
+
+        # Formata o valor total em estoque para ser exibido corretamente
+        label_valor_total = Label(frame_valor, text=format_currency(valor_estoque), font=("Arial", 24), bg="#32cd32", fg="white")
+        label_valor_total.pack(pady=10)
+
+        # Quadrado 3 - Produtos com Baixo Estoque
+        frame_baixo_estoque = Frame(main_frame, bg="#ff6347", width=250, height=100)
+        frame_baixo_estoque.pack_propagate(False)
+        frame_baixo_estoque.grid(row=0, column=2, padx=20, pady=20)
+
+        label_baixo_estoque_titulo = Label(frame_baixo_estoque, text="ITENS COM BAIXO ESTOQUE", font=("Arial", 12, "bold"), bg="#ff6347", fg="white")
+        label_baixo_estoque_titulo.pack(pady=10)
+
+        label_baixo_estoque_quantidade = Label(frame_baixo_estoque, text=f"{baixo_estoque}", font=("Arial", 24), bg="#ff6347", fg="white")
+        label_baixo_estoque_quantidade.pack(pady=10)
+
+    # Pegando os valores dinâmicos
+    total_produtos = get_total_products()
+    total_valor_estoque = get_total_value()
+    baixo_estoque = get_low_stock_items()
+
+    # Criar os quadrados de informações no Frame_App
+    criar_quadrados_info(Frame_App, total_produtos, total_valor_estoque, baixo_estoque)
+
+
+
 
     main_app.mainloop()
 

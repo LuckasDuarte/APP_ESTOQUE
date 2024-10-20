@@ -32,7 +32,7 @@ def rodar_servidor():
 # Funções Flask para interagir com o banco de dados
 @app.route("/produtos", methods=["GET"])
 def listar_produtos():
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect("database/database.db")
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM ESTOQUE")
     produtos = cursor.fetchall()
@@ -45,7 +45,7 @@ def movimentar_produto():
     produto_id = dados["id"]
     quantidade = dados["quantidade"]
     
-    conn = sqlite3.connect("database.db")
+    conn = sqlite3.connect("database/database.db")
     cursor = conn.cursor()
     cursor.execute("UPDATE ESTOQUE SET quantidade = quantidade + ? WHERE id = ?", (quantidade, produto_id))
     conn.commit()
